@@ -1,20 +1,21 @@
 {{/*
 	Trigger: Added reactions only
 	Trigger Type: Reaction
+
+	Note: Restrict to only Moderation Roles
 	
-	Copyright (c): 
 	License: MIT
-	Repository: 
+	Repository: https://github.com/ThatBathroom/YAGPDB-CC
 */}}
 
 {{ $ban_emoji := "🔨" }}
 {{ $timeout_emoji := "⏰" }}
 {{ $kick_emoji := "🚪" }}
-{{ $channelID := Replace with channelID }}
+{{ $channelID := 9 }} {{/* Replace with Logging channel ID */}}
 
 {{ if eq .Reaction.Emoji.Name $ban_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $reason := "yep, buddy your banned" }}
+  {{ $reason := "(Needs a Ban Reason Line:18)" }} {{/* Changes needed */}}
   {{ print "Banning Author ID: " $authorID }}
   {{ execAdmin "ban" $authorID $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been banned. Reason: " $reason) }}
@@ -22,8 +23,8 @@
 
 {{ if eq .Reaction.Emoji.Name $timeout_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $duration := "10m" }}
-  {{ $reason := "went out of way to break rules" }}
+  {{ $duration := "10m" }} {{/* Optional Changes */}}
+  {{ $reason := "(Needs a TimeOut Reason Line:27)" }} {{/* Changes needed */}}
   {{ print "Timing out Author ID: " $authorID " for " $duration }}
   {{ execAdmin "timeout" $authorID $duration $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been timed out for " $duration ". Reason: " $reason) }}
@@ -31,7 +32,7 @@
 
 {{ if eq .Reaction.Emoji.Name $kick_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $reason := "sometimes I just like kicking people" }}
+  {{ $reason := "(Needs a Kick Reason Line:35)" }} {{/* Changes needed */}}
   {{ print "Kicking Author ID: " $authorID }}
   {{ execAdmin "kick" $authorID $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been kicked. Reason: " $reason) }}
