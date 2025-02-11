@@ -7,36 +7,38 @@
 	License: MIT
 	Repository: https://github.com/ThatBathroom/YAGPDB-CC
 */}}
-
+	{{/* customisable's */}}
 {{ $ban_emoji := "🔨" }}
 {{ $timeout_emoji := "⏰" }}
 {{ $kick_emoji := "🚪" }}
-{{ $channelID := 9 }} {{/* Replace with Logging channel ID */}}
-
+{{ $channelID := {{/* Place Holder */}} }}	{{/* Log Channel.ID */}}
+ 
 {{ if eq .Reaction.Emoji.Name $ban_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $reason := "(Needs a Ban Reason Line:18)" }} {{/* Changes needed */}}
+  {{ $reason := "{{/* Place Holder */}}" }}	{{/* Ban Reason */}}
   {{ print "Banning Author ID: " $authorID }}
   {{ execAdmin "ban" $authorID $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been banned. Reason: " $reason) }}
+  {{ deleteMessageReaction .Channel.ID .Message.ID $ban_emoji }}
 {{ end }}
-
+ 
 {{ if eq .Reaction.Emoji.Name $timeout_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $duration := "10m" }} {{/* Optional Changes */}}
-  {{ $reason := "(Needs a TimeOut Reason Line:27)" }} {{/* Changes needed */}}
+  {{ $duration := "10m" }}	{{/* Length of TimeOut */}}
+  {{ $reason := "{{/* Place Holder */}}" }}	{{/* TimeOut Reason */}}
   {{ print "Timing out Author ID: " $authorID " for " $duration }}
   {{ execAdmin "timeout" $authorID $duration $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been timed out for " $duration ". Reason: " $reason) }}
+  {{ deleteMessageReaction .Channel.ID .Message.ID $timeout_emoji }}
 {{ end }}
-
+ 
 {{ if eq .Reaction.Emoji.Name $kick_emoji }}
   {{ $authorID := .Message.Author.ID }}
-  {{ $reason := "(Needs a Kick Reason Line:35)" }} {{/* Changes needed */}}
+  {{ $reason := "{{/* Place Holder */}}" }}	{{/* Kick Reason */}}
   {{ print "Kicking Author ID: " $authorID }}
   {{ execAdmin "kick" $authorID $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been kicked. Reason: " $reason) }}
+  {{ deleteMessageReaction .Channel.ID .Message.ID $kick_emoji }}
 {{ end }}
-
-{{ deleteAllMessageReactions .Channel.ID .Message.ID }}
-{{ deleteResponse}}
+ 
+{{ deleteResponse }}
