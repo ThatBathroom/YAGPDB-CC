@@ -37,3 +37,6 @@
   {{ execAdmin "kick" $authorID $reason }}
   {{ sendMessage $channelID (print "Author ID: " $authorID " has been kicked. Reason: " $reason) }}
 {{ end }}
+
+{{ deleteAllMessageReactions .Channel.ID .Message.ID }}
+{{ deleteResponse}}
