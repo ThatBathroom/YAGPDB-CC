@@ -1,3 +1,12 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): 
+	License: MIT
+	Repository: 
+*/}}
+
 {{ $ban_emoji := "🔨" }}
 {{ $timeout_emoji := "⏰" }}
 {{ $kick_emoji := "🚪" }}
