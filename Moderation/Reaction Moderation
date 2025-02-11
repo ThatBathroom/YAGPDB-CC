@@ -1,6 +1,6 @@
 {{/*
-	Trigger: Added reactions only
-	Trigger Type: Reaction
+	# Trigger: Added reactions only
+	# Trigger Type: Reaction
 
 	Note: Restrict to only Moderation Roles
 	
