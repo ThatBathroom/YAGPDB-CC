@@ -1,0 +1,20 @@
+{{/*
+	# Trigger:  -
+	# Trigger Type:  -
+
+	Note:  Utility for Embeds
+	
+	License: MIT
+		Copyright (c) 2025 ThatBathroom
+
+	Repository: https://github.com/ThatBathroom/YAGPDB-CC
+*/}}
+
+
+{{$randomInt := randInt 0 1000000}}
+{{$hexColor := printf "#%06X" $randomInt}}
+
+
+    {{/* Outputs*/}}
+{{$randomInt}}  {{/* decimal color output*/}}
+{{$hexColor}}   {{/* hex color output*/}}
