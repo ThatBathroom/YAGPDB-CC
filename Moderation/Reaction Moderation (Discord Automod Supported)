@@ -1,7 +1,20 @@
+{{/*
+	# Trigger: Added reactions only
+	# Trigger Type: Reaction
+
+	Note: Restrict to only Moderation Roles
+	
+	License: MIT
+		Copyright (c) 2025 ThatBathroom
+
+	Repository: https://github.com/ThatBathroom/YAGPDB-CC
+*/}}
+
+    {{/* customisable's */}}
 {{ $ban_emoji := "🔨" }}
 {{ $timeout_emoji := "⏰" }}
 {{ $kick_emoji := "🚪" }}
-{{ $channelID := 1335629280272453703 }}
+{{ $channelID := {{/* Place Holder */}} }}    {{/* Log Channel.ID */}}
 
 {{$triggerUserID := str .Message.Author.ID}}
 {{if not $triggerUserID}}
@@ -20,22 +33,22 @@
     {{end}}
 
     {{ if eq .Reaction.Emoji.Name $ban_emoji }}
-        {{ $reason := "Reaction Ban" }}
+        {{ $reason := "Reaction Ban" }}    {{/* Ban Reason */}}
         {{ execAdmin "ban" $triggerUserID $reason }}
         {{ sendMessage $channelID (print "User ID: " $triggerUserID " has been banned by " .User.ID ". Reason: " $reason) }}
         {{ deleteMessageReaction .Channel.ID .Message.ID .User.ID $ban_emoji }}
     {{ end }}
 
     {{ if eq .Reaction.Emoji.Name $timeout_emoji }}
-        {{ $duration := "10m" }}
-        {{ $reason := "Reaction Timeout" }}
+        {{ $duration := "10m" }}    {{/* Length of TimeOut */}}
+        {{ $reason := "Reaction Timeout" }}    {{/* TimeOut Reason */}}
         {{ execAdmin "timeout" $triggerUserID $duration $reason }}
         {{ sendMessage $channelID (print "User ID: " $triggerUserID " has been timed out by " .User.ID ", for " $duration ". Reason: " $reason) }}
         {{ deleteMessageReaction .Channel.ID .Message.ID .User.ID $timeout_emoji }}
     {{ end }}
 
     {{ if eq .Reaction.Emoji.Name $kick_emoji }}
-        {{ $reason := "Reaction Kick" }}
+        {{ $reason := "Reaction Kick" }}    {{/* Kick Reason */}}
         {{ execAdmin "kick" $triggerUserID $reason }}
         {{ sendMessage $channelID (print "User ID: " $triggerUserID " has been kicked by " .User.ID ". Reason: " $reason) }}
         {{ deleteMessageReaction .Channel.ID .Message.ID .User.ID $kick_emoji }}
