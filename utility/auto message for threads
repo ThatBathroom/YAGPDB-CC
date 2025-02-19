@@ -1,0 +1,65 @@
+{{/*
+	# Trigger: \A
+	# Trigger Type: Regex
+
+	Note: Restrict to only Forum channels (Threads)
+	
+	License: MIT
+		Copyright (c) 2025 ThatBathroom
+
+	Repository: https://github.com/ThatBathroom/YAGPDB-CC
+*/}}
+
+{{$channelID := (toString .Channel.ID)}}
+{{$cooldown := dbGet 0 "cooldown"}}
+
+{{if and $cooldown (eq $channelID (toString $cooldown.Value))}}
+    {{return}}
+{{end}}
+
+{{ $response := "" }}
+{{ $description := " " }}
+{{ $channelTags := .Channel.AppliedTags }}
+
+{{ $tags := dict tagID "tag"  }}
+
+{{ $responses := dict 
+    "tag" "desc."
+    "tag" "desc."
+    "tag" "desc."
+}}
+
+{{ range $tag, $label := $tags }}
+    {{- if in $channelTags $tag }}
+        {{- $response = print $response $label " | " -}}
+        {{- $description = (index $responses $label) -}}
+    {{- end -}}
+{{ end }}
+
+{{ if $response }}
+    {{- $response = slice $response 0 (sub (len $response) 3) -}}
+    {{ $embed := cembed 
+        "title"  $response
+        "url" "Link"
+        "description" $description
+        "color" 0xe8a425
+        "fields" (cslice
+            (sdict 
+                "name" " "
+                "value" " "
+            )
+            (sdict 
+                "name" " "
+                "value" " "
+            )
+        )
+        "footer" (sdict  
+            "text" " "
+            "icon_url" " " 
+        )
+    }}
+    {{ sendMessage nil $embed }}
+    {{dbSetExpire 0 "cooldown" $channelID 2592000}}
+{{ else }}
+    No tags found on this channel.
+{{end}}
