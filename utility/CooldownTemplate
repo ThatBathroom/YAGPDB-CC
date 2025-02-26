@@ -1,0 +1,14 @@
+ {{$lastReward := (dbGet .User.ID "CooldownKey").Value}}
+    {{$canReward := true}}
+    
+    {{if $lastReward}}
+        {{$timeElapsed := sub $currentTime (toInt $lastReward)}}
+        {{if lt $timeElapsed 86400}} {{/* Coolodwn length in seconds */}}
+            {{$canReward = false}}
+        {{end}}
+    {{end}}
+    
+    {{if $canReward}}
+        {{$_ := dbIncr .User.ID "balance" $reward}}
+        {{$_ := dbSet .User.ID "CooldownKey" (toString $currentTime)}}
+    {{end}}
