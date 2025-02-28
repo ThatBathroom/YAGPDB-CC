@@ -34,6 +34,8 @@
             {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been banned **by** `" .User.Username "`. **Reason:** `" $reason "`") }}
 	    {{ sendMessage nil $message }}
         {{ end }}
+
+			{{/* Add more blocks here */}}
     
     {{catch}}
         {{if in .Error "Unknown Member"}}
