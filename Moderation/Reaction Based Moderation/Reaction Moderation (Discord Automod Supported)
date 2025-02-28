@@ -2,8 +2,10 @@
 	# Trigger: Added reactions only
 	# Trigger Type: Reaction
 
-	Note: Restrict to only Moderation Roles
-	
+	Note: Restrict to only Moderation Roles.
+	      you will need basic understanding of yagpdb-cc template as this is a example,
+	      not a template.
+
 	License: MIT
 		Copyright (c) 2025 ThatBathroom
 
@@ -25,56 +27,12 @@
  
         {{ deleteResponse 1 }}
      
-        {{ if or (eq .Reaction.Emoji.Name "🔨") (eq .Reaction.Emoji.APIName "banhammer2:1344487902557634650") }}
+        {{ if or (eq .Reaction.Emoji.Name "🔨") (eq .Reaction.Emoji.APIName "Emoji:id") }}
             {{ $reason := "Reaction Ban" }}
             {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been banned **by** `" .User.Username "`.") "reply" .Message.ID }}
             {{ execAdmin "ban" $triggerUserID $reason }}
-            {{ sendMessage nil $message }}
             {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been banned **by** `" .User.Username "`. **Reason:** `" $reason "`") }}
-        {{ end }}
-     
-        {{ if or (eq .Reaction.Emoji.Name "⏰") (eq .Reaction.Emoji.APIName "Timeout1:1344438167574417550") }}
-            {{ $duration := "6h" }}
-            {{ $reason := "Reaction Timeout" }}
-            {{ execAdmin "timeout" $triggerUserID $duration $reason }}
-            {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`.") "reply" .Message.ID }}
-            {{ sendMessage nil $message }}
-            {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`. **Reason:** `" $reason "`") }}
-        {{ end }}
-        
-        {{ if or (eq .Reaction.Emoji.Name "1️⃣") (eq .Reaction.Emoji.APIName "num1:1344475163303088168") }}
-            {{ $duration := "1d" }}
-            {{ $reason := "Reaction Timeout" }}
-            {{ execAdmin "timeout" $triggerUserID $duration $reason }}
-            {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`.") "reply" .Message.ID }}
-            {{ sendMessage nil $message }}
-            {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`. **Reason:** `" $reason "`") }}
-        {{ end }}
-        
-        {{ if or (eq .Reaction.Emoji.Name "4️⃣") (eq .Reaction.Emoji.APIName "num4:1344475002648526928") }}
-            {{ $duration := "4d" }}
-            {{ $reason := "Reaction Timeout" }}
-            {{ execAdmin "timeout" $triggerUserID $duration $reason }}
-            {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`.") "reply" .Message.ID }}
-            {{ sendMessage nil $message }}
-            {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`. **Reason:** `" $reason "`") }}
-        {{ end }}
-        
-        {{ if or (eq .Reaction.Emoji.Name "7️⃣") (eq .Reaction.Emoji.APIName "num7:1344475065734922310") }}
-            {{ $duration := "7d" }}
-            {{ $reason := "Reaction Timeout" }}
-            {{ execAdmin "timeout" $triggerUserID $duration $reason }}
-            {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`.") "reply" .Message.ID }}
-            {{ sendMessage nil $message }}
-            {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been timed out **by** `" .User.Username "`, **for** `" $duration "`. **Reason:** `" $reason "`") }}
-        {{ end }}
-     
-        {{ if or (eq .Reaction.Emoji.Name "🚪") (eq .Reaction.Emoji.APIName "kick:1344476855478259712") }}
-            {{ $reason := "Reaction Kick" }}
-            {{ execAdmin "kick" $triggerUserID $reason }}
-            {{ $message := complexMessage "content" (print "**User:** `" .Message.Author.Username "` has been kicked **by** `" .User.Username "`.") "reply" .Message.ID }}
-            {{ sendMessage nil $message }}
-            {{ sendMessage 1335629280272453703 (print "**User ID:** `" $triggerUserID "` has been kicked **by** `" .User.Username "`. **Reason:** `" $reason "`") }}
+	    {{ sendMessage nil $message }}
         {{ end }}
     
     {{catch}}
